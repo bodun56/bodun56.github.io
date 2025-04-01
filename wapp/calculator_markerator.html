@@ -1,0 +1,85 @@
+<html>
+    <head>
+        <title>test</title>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            function test(){
+                $('#dresult').empty();
+                var interval = $("#iinterval").val();
+                var f = $("#ih").val();
+                var v = $("#is").val();
+				var spot = $("#ispot").val();
+				var xz = 0;
+				if(interval != 0){
+					xz = 40 / spot * interval;
+				}
+				
+                var result = (v / f) * (40 / spot);
+                var lefter = 0;
+                for(let i=0;i<11;i++){
+                    $('#dresult').append('<div class="c" style="top: 0mm; left:' + lefter + 'mm;"></div>');
+                    if(interval > 0) $('#dresult').append('<div class="c" style="top:' + xz + 'mm; left:' + lefter + 'mm;"></div>');
+                    lefter += result;
+                }
+            }
+            
+        </script>
+        <style>
+            .c {
+                border-radius:50%;
+                border:0.1mm solid #000;
+                width:40mm;
+                height:40mm;
+                position:absolute;
+            }
+            #dresult {
+				position:absolute;
+			}
+			
+			#ds, #dh{
+				float:left;
+				width:120px;
+				height:50px;
+			}
+			#ds span, #dh span{
+				
+			}
+			input {
+				width:100px;
+			}
+			#dbutton {
+				width: 100px;
+				height: 25px;
+				border: 1px solid;
+				text-align: center;
+				padding-top: 5px;
+				margin-top: 5px;
+				border-radius: 5px;
+				cursor: pointer;
+				background: lightblue;
+				clear:both;
+			}
+			#dbutton:hover{
+				box-shadow: 0px 0px 5px green;
+				background: green;
+				color: #fff;
+			}
+			#itog{
+				padding: 10px;
+				margin: 0 auto;
+				width: 280mm;
+				height: 120mm;
+			}
+        </style>
+    </head>
+    <body>
+        <div id="dh"><div>Частота Hz:</div><input type="number" id="ih" value="20000"></div>
+        <div id="ds"><div>Скорость mm/s:</div><input type="number" id="is" value="500"></div>
+        <div id="ds"><div>Interval size:</div> <input type="number" id="iinterval" value="0.025"></div>
+        <div id="ds"><div>Spot size:</div> <input type="number" id="ispot" value="0.05"></div>
+        
+		<div id="dbutton" onclick="test();">Просчитать</div>
+        <div id="itog"><div id="dresult"></div></div>
+    </body>
+</html>
+
