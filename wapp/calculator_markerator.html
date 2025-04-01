@@ -23,6 +23,14 @@
                 }
             }
             
+            $(document).ready(function(){
+				$('#lens').change(function(e){
+				   // Your event handler
+				   $("#ispot").val($("#lens").val());
+				});
+				// And now fire change event when the DOM is ready
+				$('#lens').trigger('change');
+			});
         </script>
         <style>
             .c {
@@ -77,7 +85,21 @@
         <div id="ds"><div>Скорость mm/s:</div><input type="number" id="is" value="500"></div>
         <div id="ds"><div>Interval size:</div> <input type="number" id="iinterval" value="0.025"></div>
         <div id="ds"><div>Spot size:</div> <input type="number" id="ispot" value="0.05"></div>
-        
+        <div id="ds"><div>Размер линзы:</div>
+			<select id="lens" name="lens" onclick>
+				<option value="0.013">50x50</option>
+				<option value="0.019">70x70</option>
+				<option value="0.021">90x90</option>
+				<option value="0.026">110x110</option>
+				<option value="0.024">140x140</option>
+				<option value="0.037">150x150</option>
+				<option value="0.041">175x175</option>
+				<option value="0.035">200x200</option>
+				<option value="0.040">220x220</option>
+				<option value="0.046">250x250</option>
+				<option value="0.070">300x300</option>
+			</select>
+		</div>
 		<div id="dbutton" onclick="test();">Просчитать</div>
         <div id="itog"><div id="dresult"></div></div>
     </body>
