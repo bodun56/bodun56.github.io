@@ -18,9 +18,17 @@
                 var lefter = 0;
                 for(let i=0;i<11;i++){
                     $('#dresult').append('<div class="c" style="top: 0mm; left:' + lefter + 'mm;"></div>');
+                    // if(interval > 0) $('#dresult').append('<div class="c" style="top:' + xz + 'mm; left:' + lefter + 'mm;"></div>');
+                    lefter += result;
+                }
+                lefter = 0;
+                for(let i=0;i<11;i++){
+                    // $('#dresult').append('<div class="c" style="top: 0mm; left:' + lefter + 'mm;"></div>');
                     if(interval > 0) $('#dresult').append('<div class="c" style="top:' + xz + 'mm; left:' + lefter + 'mm;"></div>');
                     lefter += result;
                 }
+                dotBackground();
+                dotOpacityRange();
             }
             
             $(document).ready(function(){
@@ -28,36 +36,90 @@
 				   // Your event handler
 				   $("#ispot").val($("#lens").val());
 				   $("#iinterval").val($("#lens").val());
+				   test();
 				});
 				// And now fire change event when the DOM is ready
 				$('#lens').trigger('change');
 			});
+
+			function dotBackground(){
+				if($("#dotbackground").is(":checked")){
+					$(".c").css("background-color", "#fff");
+				}else{
+					$(".c").css("background-color", "transparent");
+				}
+			}
+
+			function dotOpacity(){
+				if($("#dotopacity").is(":checked")){
+					$(".c").css("opacity", "0.5");
+				}else{
+					$(".c").css("opacity", "1.0");
+				}
+			}
+
+			function dotOpacityRange(){
+				var opacityRange = $("#dotopacityrange").val() / 100;
+				$(".c").css("opacity", opacityRange);
+			}
+
+			var infoStatus = true;
+			function visiblerInfo(){
+				if(infoStatus == true){
+					$("#info").css("display", "none");
+					infoStatus = false;
+					$("#hide").text("Показать информацию");
+				}else{
+					$("#info").css("display", "block");
+					infoStatus = true;
+					$("#hide").text("Скрыть");
+				}
+			}
         </script>
         <style>
+			body{
+				background-color:#000;
+				color:#fff;
+			}
             .c {
                 border-radius:50%;
-                border:0.1mm solid #000;
+                border:0.1mm solid red;
                 width:40mm;
                 height:40mm;
                 position:absolute;
+/*                 background-color:green; */
             }
             #dresult {
-				position:absolute;
+				position: absolute;
+				width: 280mm;
+				height: 120mm;
+				overflow: hidden;
+				border: 1px solid #000;
+/* 				background-color: gray; */
 			}
 			
 			#ds, #dh{
-				float:left;
-				width:120px;
-				height:50px;
+/* 				float:left; */
+/* 				width:120px; */
+				height:60px;
 			}
 			#ds span, #dh span{
 				
 			}
-			input {
-				width:100px;
+			input, select {
+				width: 150px;
+				border-radius: 5px;
+				box-shadow: 0px 0px 4px;
+				padding-top: 5px;
+				padding-bottom: 5px;
+				padding-left: 5px;
+				padding-right: 5px;
+				margin-top: 5px;
+				margin-bottom: 5px;
+				height: 30px;
 			}
 			#dbutton {
-				width: 100px;
+				width: 150px;
 				height: 25px;
 				border: 1px solid;
 				text-align: center;
@@ -65,44 +127,113 @@
 				margin-top: 5px;
 				border-radius: 5px;
 				cursor: pointer;
-				background: lightblue;
-				clear:both;
+				background: white;
+				color: #000;
+				clear: both;
 			}
 			#dbutton:hover{
-				box-shadow: 0px 0px 5px green;
-				background: green;
-				color: #fff;
+				box-shadow: 0px 0px 8px #fff;
+/* 				background: green; */
+/* 				color: #fff; */
 			}
 			#itog{
 				padding: 10px;
-				margin: 0 auto;
+/* 				margin: 0 auto; */
 				width: 280mm;
 				height: 120mm;
+			}
+			select{
+				width:150px;
+			}
+			
+			#block_menu{
+				float:left;
+				width:200px;
+				padding:10px;
+			}
+			#block_vision{
+				float:left;
+			}
+			.title{
+				text-align:center;
+				font-weight:bold;
+			}
+			#dotopacityrange{
+				box-shadow:none;
+			}
+			#poleinfo{
+				padding:10px;
+				border:1px solod #fff;
+				border-radius:5px;
+			}
+			#info{
+				padding-bottom:10px;
+			}
+			#hide{
+				cursor:pointer;
+				width:200px;
+				margin:0 auto;
+				text-align:center;
+				background-color:lightgray;
+				border-radius:5px;
+				color:#000;
+				border:1px solid #fff;
+			}
+			#hide:hover{
+				font-weight:bold;
 			}
         </style>
     </head>
     <body>
-        <div id="dh"><div>Частота Hz:</div><input type="number" id="ih" value="20000"></div>
-        <div id="ds"><div>Скорость mm/s:</div><input type="number" id="is" value="500"></div>
-        <div id="ds"><div>Interval size:</div> <input type="number" id="iinterval" value="0.025"></div>
-        <div id="ds"><div>Spot size:</div> <input type="number" id="ispot" value="0.05"></div>
-        <div id="ds"><div>Размер линзы:</div>
-			<select id="lens" name="lens" onclick>
-				<option value="0.013">50x50 (f63 mm)</option>
-				<option value="0.019">70x70 (f100 mm)</option>
-				<option value="0.021">90x90 (f130 mm)</option>
-				<option value="0.026">110x110 (f160 mm)</option>
-				<option value="0.024">140x140 (f210 mm)</option>
-				<option value="0.037">150x150 (f225 mm)</option>
-				<option value="0.041">175x175 (f254 mm)</option>
-				<option value="0.035">200x200 (f290 mm)</option>
-				<option value="0.040">220x220 (f330 mm)</option>
-				<option value="0.046">250x250 (f380 mm)</option>
-				<option value="0.070">300x300 (f420 mm)</option>
-			</select>
+		<div id="poleinfo">
+				<div id="info">
+					<p>Калькулятор параметров для маркераторов, здесь визуально можно оценить и подобрать параметры для схождения точек луча маркератора на материале.</p>
+					С левой части окна ниже расположены меню параметров, с правой стороны как точки будут расположены на материале.<br>
+					При измении параметров, будут изменяться и отображения точек на основе параметров.
+					<p>Частота Hz - Частота источника излучения указывается в Герцах</p>
+					<p>Скорость mm/s - Скорость гравировки заданная миллиметрах в секунду</p>
+					<p>Interval size - Интервал между линиями, изначально равно точке в фокусировке линзы</p>
+					<p>Размер точки в фокусе - Диаметр точки в фокусе, диаметр точки в фокусе зависит от размера линзы</p>
+					<p>Размер линзы - Размер линзы установленной в сканатор, так же в скобках указано фокусное расстояние для выбранной линзы</p>
+					<p>Отображать фон точки - Отображать или не отображать фон у точки, если не задано, будет отображаться только контур точки</p>
+					<p>Прозначность точек - Ползунок прозрачности точек, для возможной оценки перекрытия точек друг на друга и плотности заполнения</p>
+				</div>
+				<div id="hide" onclick="visiblerInfo();">Скрыть</div>
 		</div>
-		<div id="dbutton" onclick="test();">Просчитать</div>
-        <div id="itog"><div id="dresult"></div></div>
+		<div id="container">
+			<div id="block_menu">
+				<div class="title">Меню параметров</div>
+				<div id="dh"><div>Частота Hz:</div><input type="number" step="1" min="1" id="ih" value="20000" onclick="test();"></div>
+				<div id="ds"><div>Скорость mm/s:</div><input type="number" id="is" step="1" min="1" value="500" onclick="test();"></div>
+				<div id="ds"><div>Interval size:</div> <input type="number" step="0.001" id="iinterval" value="0.025" onclick="test();"></div>
+				<div id="ds"><div>Размер точки в фокусе:</div> <input type="number" step="0.001" id="ispot" value="0.05" onclick="test();"></div>
+				<div id="ds"><div>Размер линзы:</div>
+					<select id="lens" name="lens" onclick>
+						<option value="0.013">50x50 (f63 mm)</option>
+						<option value="0.019">70x70 (f100 mm)</option>
+						<option value="0.021">90x90 (f130 mm)</option>
+						<option value="0.026">110x110 (f160 mm)</option>
+						<option value="0.024">140x140 (f210 mm)</option>
+						<option value="0.037">150x150 (f225 mm)</option>
+						<option value="0.041">175x175 (f254 mm)</option>
+						<option value="0.035">200x200 (f290 mm)</option>
+						<option value="0.040">220x220 (f330 mm)</option>
+						<option value="0.046">250x250 (f380 mm)</option>
+						<option value="0.070">300x300 (f420 mm)</option>
+					</select>
+				</div>
+				<div id="dh"><div>Отображать фон точки:</div><input type="checkbox" id="dotbackground" checked onclick="dotBackground();"></div>
+				<!---<div id="dh"><div>Полупрозрачные точки:</div><input type="checkbox" id="dotopacity" checked onclick="dotOpacity();"></div>--->
+				<div id="dh"><div>Прозначность точек:</div><input type="range" min="0" max="100" id="dotopacityrange" onclick="dotOpacityRange();"></div>
+				<div id="dbutton" onclick="test();">Просчитать</div>
+			</div>
+
+			<div id="block_vision">
+				<div class="title">Отображение расположения точек</div>
+				<div id="itog"><div id="dresult"></div></div>
+			</div>
+		</div>
+
     </body>
 </html>
 
